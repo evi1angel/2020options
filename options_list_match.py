@@ -41,7 +41,7 @@ while n < max0:
         if n==1:
             df_tst[df_tst.UnderlyingSymbol.isin(list0)].to_csv(outfile_index, header=True, index=False)         #  change symbol or Underlyingsymol here  
         else:
-            df_tst[df_tst.Underlyingsymbol.isin(list0)].to_csv(outfile_index, header=False, index=False)  #  ue, date                                                     
+            df_tst[df_tst.UnderlyingSymbol.isin(list0)].to_csv(outfile_index, header=False, index=False)  #  ue, date                                                     
         n = n+1                                                         
 print("done!")
     
