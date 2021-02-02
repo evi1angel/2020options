@@ -24,7 +24,7 @@ n = 1      # ind = [1,2,3]
 max0 = int(len(fn0))
 
 # print(n<max0)
-str2 ="D:\\Jon\\retrieval\\output\\new"
+str2 ="D:\\Jon\\retrieval_ops\\output\\new"
 while n < max0:
     # print(n)
     ind.append(n)
@@ -44,7 +44,7 @@ while n < max0:
             df_tst['DDate'] = pd.to_datetime(df_tst.DataDate)   #'].apply(lambda x: pd.Timestamp(x).strftime('%Y-%m-%d'))
             df_tst['diff'] = (df_tst['Edate'] - df_tst['DDate'])
             df_tst['diff2'] = df_tst['diff'].astype('timedelta64[D]').astype(int)#  ue, date       
-            df_tst[df_tst.diff2 > 90][df_tst.UnderlyingSymbol.isin(list0)].to_csv(outfile_index, header=False, index=False)                                               
+            df_tst[df_tst.diff2 <= 90][df_tst.UnderlyingSymbol.isin(list6)].to_csv(outfile_index, header=False, index=False)                                               
         n = n+1                                                         
 print("done!")
     
