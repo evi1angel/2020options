@@ -22,7 +22,6 @@ print(len(fn0))
 ind = [] 
 n = 1      # ind = [1,2,3]
 max0 = int(len(fn0))
-
 # print(n<max0)
 str2 ="D:\\Jon\\retrieval_ops\\output\\new"
 while n < max0:
@@ -32,20 +31,17 @@ while n < max0:
     #    infile_index = str1 + '.' + str(i) + '.csv'
         outfile_index = str2 + str(n)   #  +".csv"
         print("reading: # " +str(i)+ " ")
-        df_tst = pd.read_csv(i, low_memory=False) 
+        df_tst = pd.read_csv(i, low_memory=False)
+         #'].apply(lambda x: pd.Timestamp(x).strftime('%Y-%m-%d'))
+        df_tst['diff'] = pd.to_datetime(df_tst.Expiration) - pd.to_datetime(df_tst.DataDate)  
+        df_tst['diff2'] = df_tst['diff'].astype('timedelta64[D]').astype(int)#  change symbol or Underlyingsymol here  
+        df_tst = df_tst[df_tst.diff2 <= 90][df_tst.UnderlyingSymbol.isin(list6)]
         if n==1:
-            df_tst['Edate'] = pd.to_datetime(df_tst.Expiration)#  df_tst['Expiration'].apply(lambda x: pd.Timestamp(x).strftime('%Y-%m-%d'))
-            df_tst['DDate'] = pd.to_datetime(df_tst.DataDate)   #'].apply(lambda x: pd.Timestamp(x).strftime('%Y-%m-%d'))
-            df_tst['diff'] = (df_tst['Edate'] - df_tst['DDate'])
-            df_tst['diff2'] = df_tst['diff'].astype('timedelta64[D]').astype(int)#  change symbol or Underlyingsymol here  
-            df_tst[df_tst.diff2 <= 90][df_tst.UnderlyingSymbol.isin(list6)].to_csv(outfile_index, header=True, index=False)
+            df_tst.iloc[:, :-3].to_csv(outfile_index, header=True, index=False)
         else:
-            df_tst['Edate'] = pd.to_datetime(df_tst.Expiration)#  df_tst['Expiration'].apply(lambda x: pd.Timestamp(x).strftime('%Y-%m-%d'))
-            df_tst['DDate'] = pd.to_datetime(df_tst.DataDate)   #'].apply(lambda x: pd.Timestamp(x).strftime('%Y-%m-%d'))
-            df_tst['diff'] = (df_tst['Edate'] - df_tst['DDate'])
-            df_tst['diff2'] = df_tst['diff'].astype('timedelta64[D]').astype(int)#  ue, date       
-            df_tst[df_tst.diff2 <= 90][df_tst.UnderlyingSymbol.isin(list6)].to_csv(outfile_index, header=False, index=False)                                               
+            df_tst = df_tst.iloc[:, :-3].to_csv(outfile_index, header=False, index=False)                                               
         n = n+1                                                         
 print("done!")
     
-
+#  need to drop last 5 columns 
+# df = df.iloc[:,:-1]
